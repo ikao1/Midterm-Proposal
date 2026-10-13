@@ -43,9 +43,9 @@ More than one script:
 
 | Milestone | Deliverable |
 | --- | --- |
-| **By Oct 13** | Import image as a camera-facing plane; freehand/rectangle cut; each cut becomes its own textured mesh object at a Z-depth; basic viewport parallax. |
+| **By Oct 13** | Create a GUI for N-panel for the purposes of importing images as a camera-facing plane; freehand/rectangle cut; each cut becomes its own textured mesh object at a Z-depth; basic viewport parallax. |
 | **By Oct 20** | Depth/buffer/scale controls, presets, live preview, undo, save/load settings, hole-filling, and a full N-panel UI. |
-| **By Oct 26** | Update-from-image rebuild, mesh cleanup/thickness options, robustness passes, and 2–3 demo drawings polished for crit. |
+| **By Oct 26** | Update UI design of GUI N panel, mesh cleanup/thickness options, robustness passes, and 2–3 demo drawings polished for crit. |
 
 ## The Smallest Version That Still Counts
 
