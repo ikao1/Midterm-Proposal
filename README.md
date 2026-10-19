@@ -83,3 +83,71 @@ Load one image sequence or movie onto the selected object, animate Offset X/Y (s
 Frame-accurate, non-blocking playback and caching of movie/image-sequence textures while the material graph rebuilds, plus **true displacement** support/performance in EEVEE. Bake is the second risk.
 
 - **Fallback:** prefer image sequences over compressed movies, ship animated **bump** as the primary “raised” look, bake only the current frame, and use proxy/reduced-resolution playback. If displacement is unreliable, keep it as an optional Cycles path and label it clearly.
+
+---
+
+# Install and run
+
+## What you need
+
+- **Blender 5.2 LTS** (tested on 5.2.1 LTS). Blender 4.2+ should also work but has not been tested.
+- The file `motion_texture_studio.py` from this repo (no other install, no dependencies).
+
+## Steps
+
+1. Download this repo (green **Code** button → **Download ZIP**) or clone it.
+2. Open Blender. Go to **Edit → Preferences → Add-ons**.
+3. Click the **⌄** (dropdown) at the top right → **Install from Disk…**.
+4. Select **`motion_texture_studio.py`**.
+5. Tick the checkbox next to **Motion Texture Studio** to enable it.
+6. In the 3D Viewport press **N** to open the sidebar and click the **Motion Texture** tab.
+7. Select a mesh object (the default cube is fine). Click **Open Still…** and choose **`assets/test_texture.png`**.
+8. Click **Apply to Selected**. The object now has a material called `MotionTexture_<objectname>`.
+9. Open the **Animate Texture** section and click a motion preset such as **Scroll X**. Set the scene end frame to ~48 and press **Play/Pause** — the texture scrolls in the viewport.
+10. For a sequence: **Open Image Sequence…** and pick the **first** file of a numbered sequence (`frame_0001.png`). The frame range is detected from the filenames.
+11. For a movie: **Open Movie…** and pick a video file.
+
+If a movie or sequence codec will not load, use an **image sequence** instead — it is the more reliable path.
+
+# What works right now
+
+- Installs and registers as a Blender add-on; sidebar tab **Motion Texture** opens.
+- Per-object material named `MotionTexture_<object>` with a full non-destructive node graph.
+- **Sources:** still image, numbered image sequence (auto frame range), and movie.
+- **Playback:** play/pause, frame step, scrub, preview render, scene-synced timeline.
+- **Motion presets:** Scroll X/Y, Drift, Pulse, Breathe, Ripple, Flicker, Stop Motion.
+- **Animation:** keyframe offset/rotation/scale/hue/brightness/contrast/relief/depth/glow, delete key, clear animation, linear/bezier/constant interpolation, copy still to frame 1.
+- **Raised surface:** animated bump; relief source from image / noise / wave; relief motion presets Drift, Pulse, Ripple, Crawl.
+- **True displacement:** optional, via a displacement output + subdivision modifier, with clear warning that it is heavy and best on Cycles.
+- **Surface / color / transform / emission** controls and surface presets (Matte, Glossy, Plastic, Ceramic, Metal, Brushed, Velvet, Glass, Glowing).
+- **Save / load / import / export** motion presets as JSON in Blender’s user presets folder.
+- **Apply to Selected**, **Apply to All Selected**, **Rebuild**, **Revert to Still**, undo/redo.
+- Drag-and-drop an image or movie onto the 3D Viewport.
+
+# What does not work yet
+
+- **Bake to image sequence** and **bake current frame** are not implemented.
+- **Rename preset** and per-preset thumbnails are not implemented.
+- **Loop modes** (Ping-Pong / Hold Last) and **playback speed** are not implemented.
+- **Movie auto-duration** depends on the codec loading correctly; image sequences are more reliable.
+- **True displacement** is unreliable in EEVEE and should be used on Cycles. Bump is the safe path.
+- **“Apply to All Selected”** copies the current settings, but does not copy animation curves to the other objects.
+- The add-on was tested headless; interactive UI polish (button layout, long menus) is still rough.
+
+# Peer run
+
+> To be completed with a classmate. This section will record their name and three sentences: what they did, what happened, what confused or broke.
+
+- **Classmate:** _(name here)_
+- **Sentences:**
+  1. _(what they did)_
+  2. _(what happened)_
+  3. _(what confused or broke)_
+
+# Running a classmate's tool
+
+> To be completed after testing a classmate’s add-on with their README. Three sentences about their tool.
+
+1. _(what I installed and tried)_
+2. _(what worked)_
+3. _(what I got stuck on)_
