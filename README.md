@@ -157,3 +157,11 @@ I tested **A6: Wire Body Profile (InBody Data Build)** by **Brent Shultz** (http
 1. I cloned the repo, opened `InBody Data Build.mb` in Maya 2027, launched the window, and entered three dated measurements for a test profile so the wire body had something to follow.
 2. Everything in the README worked as described — Save Entry stored the entries, the history list loaded them back, Delete Selected Entry removed one, Rebuild Wire Body regenerated the figure (2196 triangles, 179 cm tall), and the Entry slider smoothly reshaped the wire body's height and limb/trunk thickness from the neutral body through each dated entry, with the "Exaggerate change" multiplier doing its job.
 3. The only thing that tripped me up was that the window didn't open automatically when the scene loaded (I had to run `import body_profile_ui; body_profile_ui.show()` by hand), and the tool requires Maya 2027 specifically since the scene was saved in that version — but once it was open I could not get anything to actually break.
+
+# Peer review: Fiori's Color Script Template Generator
+
+I peer reviewed **Fiori Sims'** Color Script Template Generator (https://github.com/fiorisims/pfa-week06), a pygame palette tool that samples colors from images, builds a color script / palette sheet, and exports swatches to Photoshop.
+
+1. The first issue I hit was that pygame crashed immediately the moment I clicked any button in the window, so I had opencode bypass that problem before I could use the tool at all.
+2. After that workaround, every feature and button worked and ran smoothly — loading images, sampling and building the palette, and saving the sheet — with the only remaining exception being the Photoshop export button.
+3. A nice touch was that each swatch displays its hex code, but the hex codes sometimes clip into the color palette area instead of staying fully inside their swatch.
