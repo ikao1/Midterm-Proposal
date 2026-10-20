@@ -292,6 +292,14 @@ def _get_material(obj):
         slots.append(mat)
         index = len(slots) - 1
     obj.active_material_index = index
+    # Make sure the Motion Texture material is actually shown on the mesh: assign any
+    # face that is not already using it to the new slot (a fresh object has every face
+    # on slot 0, so without this the texture never appears).
+    mesh = obj.data
+    if mesh is not None:
+        for poly in mesh.polygons:
+            if poly.material_index != index:
+                poly.material_index = index
     return mat
 
 
@@ -359,6 +367,9 @@ def _apply_source_settings(node, s):
         except Exception:
             pass
         user.frame_start = 1
+        # The ImageUser must span the whole movie, or Blender clamps it to a single
+        # frame and the video looks frozen on the texture.
+        user.frame_duration = max(1, int(getattr(image, "frame_duration", 0) or 0))
         user.frame_offset = s.frame_offset
         user.use_cyclic = s.loop_mode == "LOOP"
         user.use_auto_refresh = True

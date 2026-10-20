@@ -105,7 +105,7 @@ Frame-accurate, non-blocking playback and caching of movie/image-sequence textur
 8. Click **Apply to Selected**. The object now has a material called `MotionTexture_<objectname>`.
 9. Open the **Animate Texture** section and click a motion preset such as **Scroll X**. Set the scene end frame to ~48 and press **Play/Pause** — the texture scrolls in the viewport.
 10. For a sequence: **Open Image Sequence…** and pick the **first** file of a numbered sequence (`frame_0001.png`). The frame range is detected from the filenames.
-11. For a movie: **Open Movie…** and pick a video file.
+11. For a movie: **Open Movie…** and pick a video file. The scene frame range is set to the movie's length, and pressing **Play** shows the video animating on the object surface.
 
 If a movie or sequence codec will not load, use an **image sequence** instead — it is the more reliable path.
 
@@ -113,7 +113,7 @@ If a movie or sequence codec will not load, use an **image sequence** instead �
 
 - Installs and registers as a Blender add-on; sidebar tab **Motion Texture** opens.
 - Per-object material named `MotionTexture_<object>` with a full non-destructive node graph.
-- **Sources:** still image, numbered image sequence (auto frame range), and movie.
+- **Sources:** still image, numbered image sequence (auto frame range), and movie. Loading a still or a movie now shows the texture on the object right away (the material is assigned to the mesh faces), and a loaded movie plays across the frame range instead of staying frozen on one frame.
 - **Playback:** play/pause, frame step, scrub, preview render, scene-synced timeline.
 - **Motion presets:** Scroll X/Y, Drift, Pulse, Breathe, Ripple, Flicker, Stop Motion.
 - **Animation:** keyframe offset/rotation/scale/hue/brightness/contrast/relief/depth/glow, delete key, clear animation, linear/bezier/constant interpolation, copy still to frame 1.
@@ -132,11 +132,17 @@ If a movie or sequence codec will not load, use an **image sequence** instead �
 - **Movie auto-duration** depends on the codec loading correctly; image sequences are more reliable.
 - **True displacement** is unreliable in EEVEE and should be used on Cycles. Bump is the safe path.
 - **“Apply to All Selected”** copies the current settings, but does not copy animation curves to the other objects.
+- **Motion presets key across the whole scene frame range.** If the scene is long (e.g. 1152 frames) a preset like Scroll X moves the texture only a tiny amount over a short clip and looks almost frozen. Shorten the scene frame range to the length of your shot so the motion reads.
 - The add-on was tested headless; interactive UI polish (button layout, long menus) is still rough.
+
+## Fixed in this version
+
+- Loading a **still image** or a **movie** now actually shows the texture on the object. Previously the material was created but never assigned to the mesh faces, so a fresh object kept its default grey material.
+- A loaded **movie** now plays on the texture. Previously the movie's ImageUser frame duration was left at 1, so Blender clamped it to a single frame and the video looked frozen.
 
 # Peer run
 
-> To be completed with a classmate. This section will record their name and three sentences: what they did, what happened, what confused or broke.
+> A classmate who does not have Blender can still run this: use a portable (unzipped) Blender build — no install needed — or a screen-shared session. Record their name and three sentences here: what they did, what happened, what confused or broke.
 
 - **Classmate:** _(name here)_
 - **Sentences:**
@@ -146,8 +152,8 @@ If a movie or sequence codec will not load, use an **image sequence** instead �
 
 # Running a classmate's tool
 
-> To be completed after testing a classmate’s add-on with their README. Three sentences about their tool.
+I tested **A6: Wire Body Profile (InBody Data Build)** by **Brent Shultz** (https://github.com/bshultz-sva/A6), a Maya 2027 tool that opens a "Wire Body Profile" window where you save body-composition measurements under a person's name and date and then reshape a blue wire-frame human figure with a slider.
 
-1. _(what I installed and tried)_
-2. _(what worked)_
-3. _(what I got stuck on)_
+1. I cloned the repo, opened `InBody Data Build.mb` in Maya 2027, launched the window, and entered three dated measurements for a test profile so the wire body had something to follow.
+2. Everything in the README worked as described — Save Entry stored the entries, the history list loaded them back, Delete Selected Entry removed one, Rebuild Wire Body regenerated the figure (2196 triangles, 179 cm tall), and the Entry slider smoothly reshaped the wire body's height and limb/trunk thickness from the neutral body through each dated entry, with the "Exaggerate change" multiplier doing its job.
+3. The only thing that tripped me up was that the window didn't open automatically when the scene loaded (I had to run `import body_profile_ui; body_profile_ui.show()` by hand), and the tool requires Maya 2027 specifically since the scene was saved in that version — but once it was open I could not get anything to actually break.
